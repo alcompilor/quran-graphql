@@ -1,4 +1,5 @@
 import { parseSections, parseChapters, parseVerses } from "./parser.js";
+import { Verse } from "./types/Verse.js";
 
 const {
     SECTIONS_ENDPOINT,
@@ -6,25 +7,31 @@ const {
     VERSES_ENDPOINT,
     TRANSLATIONS_ENDPOINT,
     TRANSLATIONS_RESOURCE_ENDPOINT,
-} = process.env;
+} = process.env as {
+    SECTIONS_ENDPOINT: string;
+    CHAPTERS_ENDPOINT: string;
+    VERSES_ENDPOINT: string;
+    TRANSLATIONS_ENDPOINT: string;
+    TRANSLATIONS_RESOURCE_ENDPOINT: string;
+};
 
-const fetchData = async (url: string) => {
+const fetchData = async (endpoint: string) => {
     try {
-        const response = await fetch(url);
+        const response: Response = await fetch(endpoint);
         return response.json();
     } catch (err: any) {
-        throw new Error(`Failed to fetch data:\n${err.message}`);
+        throw new Error(`Failed to fetch data:\n ${err.message}`);
     }
 };
 
-export const resolvers: any = {
+export const resolvers = {
     Query: {
         sections: async () => {
             const { juzs: sections }: any = await fetchData(SECTIONS_ENDPOINT);
             return parseSections(sections);
         },
 
-        section: async (_, { number }) => {
+        section: async (_: any, { number }: { number: number }) => {
             const { juzs: sections }: any = await fetchData(SECTIONS_ENDPOINT);
             return parseSections(sections, [number])[0];
         },
@@ -34,7 +41,7 @@ export const resolvers: any = {
             return parseChapters(chapters);
         },
 
-        chapter: async (_, { number }) => {
+        chapter: async (_: any, { number }: { number: number }) => {
             const { chapters }: any = await fetchData(CHAPTERS_ENDPOINT);
             return parseChapters(chapters, [number])[0];
         },
@@ -44,28 +51,33 @@ export const resolvers: any = {
             return parseVerses(verses);
         },
 
-        verse: async (_, { reference, lang }) => {
+        verse: async (
+            _: any,
+            { reference, lang }: { reference: string; lang: string }
+        ) => {
             const { verses }: any = await fetchData(VERSES_ENDPOINT);
-            const parsed = parseVerses(verses, [reference])[0];
+            const parsed: Verse = parseVerses(verses, [reference])[0];
             return { ...parsed, lang };
         },
     },
 
     Section: {
-        chapters: async ({ number }) => {
+        chapters: async ({ number }: { number: number }) => {
             const { juz: section }: any = await fetchData(
                 `${SECTIONS_ENDPOINT}/${number}`
             );
-            const chapters_numbers = Object.keys(section.verse_mapping).map(
-                (key) => +key
-            );
+
+            const chapters_numbers: number[] = Object.keys(
+                section.verse_mapping
+            ).map((key: string) => +key);
+
             const { chapters }: any = await fetchData(CHAPTERS_ENDPOINT);
             return parseChapters(chapters, [...chapters_numbers]);
         },
     },
 
     Chapter: {
-        verses: async ({ id }) => {
+        verses: async ({ id }: { id: number }) => {
             const { verses }: any = await fetchData(
                 `${VERSES_ENDPOINT}?chapter_number=${id}`
             );
@@ -74,25 +86,35 @@ export const resolvers: any = {
     },
 
     Verse: {
-        chapter: async ({ reference }) => {
-            const chapter_number = reference.split(":")[0];
+        chapter: async ({ reference }: { reference: string }) => {
+            const chapter_number: string = reference.split(":")[0];
+
             const { chapter }: any = await fetchData(
                 `${CHAPTERS_ENDPOINT}/${chapter_number}`
             );
             return parseChapters([chapter])[0];
         },
 
-        translation: async ({ reference, lang }) => {
+        translation: async ({
+            reference,
+            lang,
+        }: {
+            reference: string;
+            lang: string;
+        }) => {
             if (lang) {
                 const { translations }: any = await fetchData(
                     TRANSLATIONS_RESOURCE_ENDPOINT
                 );
+
                 const langID = translations.find(
-                    (item) => item.language_name === lang
+                    (item: any) => item.language_name === lang
                 ).id;
+
                 const { translations: verse }: any = await fetchData(
                     `${TRANSLATIONS_ENDPOINT}/${langID}?verse_key=${reference}`
                 );
+
                 return verse[0].text;
             }
         },
