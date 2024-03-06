@@ -1,7 +1,7 @@
 {
-  "name": "graphql-redis-demo",
+  "name": "quran-graphql",
   "version": "1.0.0",
-  "description": "",
+  "description": "A flexible and fast GraphQL API for the Quran, utilizes Redis cache and relies on the public Quran.com API.",
   "main": "server.js",
   "scripts": {
     "compile": "tsc",
