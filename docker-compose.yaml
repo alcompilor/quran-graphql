@@ -1,0 +1,30 @@
+version: '3.9'
+
+networks:
+  api-network:
+
+services:
+  redis:
+    container_name: redis_container
+    image: redis:7.2.4-alpine
+    ports:
+      - 6379:6379
+    networks:
+      - api-network
+  
+  graphql:
+    container_name: quran_api_container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    networks:
+      - api-network
+    environment:
+      - SECTIONS_ENDPOINT=https://api.quran.com/api/v4/juzs
+      - CHAPTERS_ENDPOINT=https://api.quran.com/api/v4/chapters
+      - VERSES_ENDPOINT=https://api.quran.com/api/v4/quran/verses/uthmani
+      - TRANSLATIONS_ENDPOINT=https://api.quran.com/api/v4/quran/translations
+      - TRANSLATIONS_RESOURCE_ENDPOINT=https://api.quran.com/api/v4/resources/translations
+      - REDIS_INSTANCE=redis://redis_container:6379
