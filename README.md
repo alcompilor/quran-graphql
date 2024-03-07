@@ -1,4 +1,4 @@
-# <img src = "https://i.imgur.com/1NWRwOh.png" width = 400px>
+# <img src = "https://i.imgur.com/1NWRwOh.png" width = 420px>
 
 This project provides a simple yet versatile and speedy Quran API, built on ApolloServer (GraphQL) and enhanced with integrated Redis caching. It utilizes the public Quran.com API (V4) for data. The goal is to offer an effective solution for effortlessly incorporating Quranic verses (Ayat), chapters (Surahs), and sections (Juzus) into various applications.
 
@@ -43,8 +43,8 @@ Before you get started, make sure you have the following prerequisites installed
     ```
 4. Open your browser and go to http://localhost:4000 to access ApolloServer interface.
 
-## Queries Documentation
-#### **`chapter(number: Int): Chapter`**
+## 📜 Queries Documentation
+### **`chapter(number: Int): Chapter`**
 
 The `chapter(...)` query accepts a `number` as parameter and returns a `Chapter` object.
 
@@ -58,7 +58,7 @@ The returned `Chapter` object consists of 5 fields:
 - **`verses`:** A field of type `Verse[]` that returns an array of `Verse` objects. This field retrieves all verses associated with the chapter.
 - **`versesCount`:** A field of type `Int` that returns the total number of verses in the chapter.
 
-#### **`section(number: Int): Section`**
+### **`section(number: Int): Section`**
 The `section(...)` query accepts a `number` as parameter and returns a `Section` object.
 
 The `number` parameter corresponds to the sequential order of the section (Juzu) in the compiled Uthmani Quran. For example, specifying `number` as 30, will fetch the final section of the Quran. In this section, the first chapter is An-Naba and the last chapter is An-Nas.
@@ -72,7 +72,7 @@ The returned `Section` object consists of 6 fields:
 - **`chapters`:** A field of type `Chapter[]` that returns an array of `Chapter` objects. This field retrieves all chapters associated with the section.
 - **`versesCount`:** A field of type `Int` that returns the total number of verses in the section.
 
-#### **`verse(reference: String, lang?: String): Verse`**
+### **`verse(reference: String, lang?: String): Verse`**
 The `verse(...)` query requires a `reference` parameter and optionally accepts a `lang` parameter, returning a `Verse` object.
 
 The `reference` parameter corresponds to the specific verse (Ayah) in the Uthmani Quran. For instance, if you set `reference` to `114:6`, it will retrieve the 6th verse in the 114th chapter of the Quran, which is the final verse in the Quran.
@@ -87,7 +87,7 @@ The returned `Verse` object consists of 5 fields:
 - **`chapter`:** A field of type `Chapter` that returns a `Chapter` object. This field retrieves the chapter associated with the verse.
 - **`translation`:** A field of type `String` that returns the translation of the requested verse in case `lang` parameter was specified, otherwise it will return `null`.
 
-## Additional Information
+## ℹ️ Additional Information
 For detailed information on all executable queries using this GraphQL API, refer to the documentation available on the ApolloServer Interface.
 
 ## ⚖️ License
