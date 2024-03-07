@@ -57,7 +57,7 @@ The returned `Chapter` object consists of 5 fields:
 - **`nameLatin`:** A field of type `String` representing the chapter name in the Latin Alphabet.
 - **`verses`:** A field of type `Verse[]` that returns an array of `Verse` objects. This field retrieves all verses associated with the chapter.
 - **`versesCount`:** A field of type `Int` that returns the total number of verses in the chapter.
-
+<br />
 #### **`section(number: Int): Section`**
 The `section(...)` query accepts a `number` as parameter and returns a `Section` object.
 
@@ -71,7 +71,7 @@ The returned `Section` object consists of 6 fields:
 - **`endVerse`:** A field of type `Int`. It represents the sequential position of the last verse within the section.
 - **`chapters`:** A field of type `Chapter[]` that returns an array of `Chapter` objects. This field retrieves all chapters associated with the section.
 - **`versesCount`:** A field of type `Int` that returns the total number of verses in the section.
-
+<br />
 #### **`verse(reference: String, lang?: String): Verse`**
 The `verse(...)` query requires a `reference` parameter and optionally accepts a `lang` parameter, returning a `Verse` object.
 
