@@ -87,7 +87,7 @@ The returned `Verse` object consists of 5 fields:
 - **`chapter`:** A field of type `Chapter` that returns a `Chapter` object. This field retrieves the chapter associated with the verse.
 - **`translation`:** A field of type `String` that returns the translation of the requested verse in case `lang` parameter was specified, otherwise it will return `null`.
 
-## ℹ️ Additional Information
+## 📄 Additional Information
 For detailed information on all executable queries using this GraphQL API, refer to the documentation available on the ApolloServer Interface.
 
 ## ⚖️ License
