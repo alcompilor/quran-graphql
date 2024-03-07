@@ -1,4 +1,4 @@
-# <img src = "https://i.imgur.com/1NWRwOh.png" width = 420px>
+# <img src = "https://i.imgur.com/1NWRwOh.png" width = 440px>
 
 This project provides a simple yet versatile and speedy Quran API, built on ApolloServer (GraphQL) and enhanced with integrated Redis caching. It utilizes the public Quran.com API (V4) for data. The goal is to offer an effective solution for effortlessly incorporating Quranic verses (Ayat), chapters (Surahs), and sections (Juzus) into various applications.
 
